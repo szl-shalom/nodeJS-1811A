@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    哈哈哈哈
+    <!-- <script>
+        // 请求接口   /api/data
+        // 需要aajx
+        // Ajax 即“Asynchronous Javascript And XML”（异步 JavaScript 和 XML），是指一种创建交互式、
+        // 快速动态网页应用的网页开发技术，无需重新加载整个网页的情况下，能够更新部分网页的技术。
+
+        // 1.新建一个对象
+        let xhr = new XMLHttpRequest();
+        // 2.打开链接
+        // 语法:xhr.open(methods,url,async)
+        // methods : 请求方式 ： get  || post
+        // url :  请求的路径
+        // async ：同步和异步请求
+        xhr.open("get", "123/321/456");
+        // 3.发送请求
+        xhr.send();
+        // 4.监听
+        xhr.onreadystatechange = function () {
+            if (xhr.status === 200 && xhr.readyState === 4) {
+                console.log(xhr.responseText)
+            }
+        }
+    </script> -->
+    <script src="./js/axios.js"></script>
+    <script>
+        let p = axios.get("/api/data")
+
+        p.then((result) => {
+            console.log(result.data)
+        })
+    </script>
+</body>
+
+</html>

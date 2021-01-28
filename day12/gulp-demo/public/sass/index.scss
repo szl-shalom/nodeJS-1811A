@@ -1,0 +1,15 @@
+@import "../css/common.css";
+
+$color:red;
+
+@mixin style($h:100%, $w:100%, $c:$color) {
+    height: $h;
+    width: $w;
+    background-color: $c;
+}
+
+
+html,
+body {
+    @include style()
+}

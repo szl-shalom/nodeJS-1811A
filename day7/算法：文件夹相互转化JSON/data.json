@@ -1,0 +1,56 @@
+{
+    "name": "demo",
+    "type": "dir",
+    "children": [{
+        "name": "demo/css",
+        "type": "dir",
+        "children": [{
+            "basename": "index.css",
+            "pathname": "demo/css/index.css",
+            "extname": ".css",
+            "type": "file",
+            "size": 39,
+            "content": "* {\r\n    margin: 0;\r\n    padding: 0;\r\n}"
+        }]
+    }, {
+        "name": "demo/img",
+        "type": "dir",
+        "children": [{
+            "basename": "1.jpg",
+            "pathname": "demo/img/1.jpg",
+            "extname": ".jpg",
+            "type": "file",
+            "size": 0,
+            "content": ""
+        }]
+    }, {
+        "basename": "index.html",
+        "pathname": "demo/index.html",
+        "extname": ".html",
+        "type": "file",
+        "size": 0,
+        "content": ""
+    }, {
+        "name": "demo/js",
+        "type": "dir",
+        "children": [{
+            "basename": "2.js",
+            "pathname": "demo/js/2.js",
+            "extname": ".js",
+            "type": "file",
+            "size": 0,
+            "content": ""
+        }, {
+            "name": "demo/js/module",
+            "type": "dir",
+            "children": [{
+                "basename": "swiper.js",
+                "pathname": "demo/js/module/swiper.js",
+                "extname": ".js",
+                "type": "file",
+                "size": 0,
+                "content": ""
+            }]
+        }]
+    }]
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <input type="text">
+    <button>登录</button>
+    <button>注册</button>
+    <script src="js/axios.js"></script>
+    <script>
+        let ipts = document.querySelectorAll("input"),
+            btns = document.querySelectorAll("button");
+
+
+        btns[0].onclick = () => {
+            axios.post("/api/login", {
+                user: ipts[0].value,
+                pwd: ipts[1].value,
+            }).then(res => {
+                if (res.data.code) {
+                    location.href = "index.html"
+                } else {
+                    alert("错误")
+                }
+            })
+        }
+
+
+        btns[1].onclick = () => {
+            axios.post("/api/register", {
+                user: ipts[0].value,
+                pwd: ipts[1].value,
+            }).then(res => {
+                if (res.data.code) {
+                    alert("注册成功")
+                } else {
+                    alert("错误")
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

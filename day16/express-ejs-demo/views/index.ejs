@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/axios.js"></script>
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+            <input type="text" class="user">
+            <input type="text" class="pwd">
+            <button>登录</button>
+    </h1>
+    <script>
+        let btn = document.querySelector("button"),
+            user = document.querySelector(".user"),
+            pwd = document.querySelector(".pwd");
+
+        btn.onclick = () => {
+            axios.post("/api/login", {
+                user: user.value,
+                pwd: pwd.value,
+            }).then(result => {
+                // console.log(result.data)
+                if(result.data){
+                    location.href = "/list"
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

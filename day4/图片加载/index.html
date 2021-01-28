@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 55%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <script>
+        let urls = [
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fspider20201129%2F515%2Fw211h304%2F20201129%2Fc3ea-kentcvy3289549.gif&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612668077&t=2ea149cfe11838ce87e8c0159ab998eb",
+            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1442235009,663434301&fm=26&gp=0.jpg",
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1833567670,2009341108&fm=26&gp=0.jpg",
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbig5.wallcoo.com%2Fcartoon%2FThe_fiery_English_alphabets_and_fiery_numbers_1920_1600%2Fimages%2FThe_fiery_English_alphabet_picture_3538327.jpg&refer=http%3A%2F%2Fbig5.wallcoo.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612669196&t=15792d45cd52d42347010496e23383f4"
+        ]
+        function loadImg(url) {
+            return new Promise((resolve, reject) => {
+                // 新建图片
+                let img = new Image();
+                // 修改路径
+                img.src = url;
+                // 加载成功
+                img.addEventListener("load", () => {
+                    resolve(img)
+                })
+                // 加载失败
+                img.addEventListener("error", () => {
+                    console.log("2")
+                })
+            })
+        }
+
+        // 循环图片路径
+        urls.forEach(url => {
+            loadImg(url).then(result=>{
+                // 添加到页面
+                document.body.appendChild(result)
+            })
+        })
+    </script>
+</body>
+
+</html>

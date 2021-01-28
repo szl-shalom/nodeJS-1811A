@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    详情页
+    <dl>
+        <dt>
+            <img src="" alt="">
+        </dt>
+        <dd>
+            <p>标题：</p>
+            <p>单价：</p>
+            <p>描述：</p>
+            <p>作者：</p>
+        </dd>
+    </dl>
+    <script src="./js/axios.js"></script>
+    <script>
+        let id = (location.search.slice(1).split("=")[1])
+        axios.post("/api/detail", {
+            id: id,
+        }).then(result => {
+            let o = result.data
+            document.querySelector("dl").innerHTML = `
+            <dt>
+                    <img src="${o.url}" alt="">
+                </dt>
+                <dd>
+                    <p>标题：${o.title}</p>
+                    <p>单价：${o.price}</p>
+                    <p>描述：${o.desc}</p>
+                    <p>作者：${o.auther}</p>
+                </dd>
+            `
+        })
+    </script>
+</body>
+
+</html>

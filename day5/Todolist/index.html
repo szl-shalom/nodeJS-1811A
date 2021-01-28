@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p>todolist</p>
+        <input type="text" placeholder="请输入内容" class="ipt">
+    </div>
+
+    <div class="content">
+        <p>正在进行 <b class="num1">1</b></p>
+        <ul class="list1">
+            <li>
+                <input type="checkbox">
+                <span>项目1</span>
+            </li>
+        </ul>
+
+
+        <p>已经完成 <b class="num2">2</b></p>
+        <ul class="list2">
+            <li>
+                <input type="checkbox" checked="true">
+                <span>项目2</span>
+            </li>
+            <li>
+                <input type="checkbox" checked="true">
+                <span>项目3</span>
+            </li>
+        </ul>
+    </div>
+    <script>
+        class Todolist {
+            constructor(opt) {
+                Object.assign(this, opt);
+                this.bindEvent();
+                this.computed()
+
+            }
+            bindEvent() {
+                this.ipt.addEventListener("keydown", e => {
+                    if (e.keyCode == 13) {
+                        let li = document.createElement("li");
+                        li.innerHTML = ` <input type="checkbox">
+                            <span>${this.ipt.value}</span>`
+
+                        this.list1.appendChild(li)
+                        this.computed()
+                    }
+
+                })
+
+
+                this.content.addEventListener("click", e => {
+                    let tar = e.target;
+                    if (tar.nodeName === "INPUT") {
+                        // if (tar.checked) {
+                        // 完成
+                        this[tar.checked ? "list2" : "list1"].appendChild(tar.parentNode)
+                        this.computed()
+
+                        // } else {
+                        // 未完成
+                        // this.list1.appendChild(tar.parentNode)
+                        // }
+                    }
+                })
+            }
+            computed() {
+                this.num1.innerHTML = this.list1.children.length;
+                this.num2.innerHTML = this.list2.children.length;
+            }
+        }
+
+        new Todolist({
+            ipt: document.querySelector(".ipt"),
+            list1: document.querySelector(".list1"),
+            list2: document.querySelector(".list2"),
+            num1: document.querySelector(".num1"),
+            num2: document.querySelector(".num2"),
+            content: document.querySelector(".content")
+        })
+
+    </script>
+</body>
+
+</html>

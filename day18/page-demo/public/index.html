@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 800px;
+            margin: auto;
+        }
+
+        .content {
+            overflow: hidden;
+        }
+
+        dl {
+            padding: 10px;
+            width: 200px;
+            float: left;
+            overflow: hidden;
+        }
+
+        .page {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .page span {
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+        }
+
+        .page span.active {
+            background: tomato;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <dl>
+                <dt>
+                    <img src="" alt="">
+                </dt>
+                <dd>
+                    <p>标题：</p>
+                    <p>单价：</p>
+                </dd>
+            </dl>
+        </div>
+        <div class="page">
+            <span></span>
+        </div>
+    </div>
+
+    <script src="./js/axios.js"></script>
+    <script>
+        let content = document.querySelector(".content"),
+            page = document.querySelector(".page"),
+            pageSize = 10,
+            index = 1;
+
+        content.addEventListener("click", e => {
+            let tar = e.target;
+            if(tar.nodeName === "IMG"){
+                // localStorage.setItem("id",tar.parentNode.parentNode.id)
+                location.href = "detail.html?" + `id=${tar.parentNode.parentNode.id}`
+            }
+        })
+        //  事件委托
+        page.addEventListener("click", e => {
+            let tar = e.target;
+            if (tar.nodeName === "SPAN") {
+                index = tar.innerHTML - 1;
+                render();
+            }
+        })
+
+
+
+        render();
+
+
+        function render() {
+            axios.post("/api/list", {
+                pageSize,
+                index,
+            }).then((result) => {
+                content.innerHTML = result.data.data.map(item => {
+                    return `
+                <dl id="${item.id}">
+                    <dt>
+                        <img src="${item.url}" alt="">
+                    </dt>
+                    <dd>
+                        <p>${item.title}</p>
+                        <p>单价：${item.price}</p>
+                    </dd>
+                </dl>
+                `
+                }).join("")
+                let html = "";
+
+                for (let i = 1; i <= result.data.pageMaxCode; i++) {
+                    html += `<span class="${i === index + 1 ? "active" : ""}">${i}</span>`
+                }
+
+                page.innerHTML = html;
+            })
+        }
+    </script>
+</body>
+
+</html>

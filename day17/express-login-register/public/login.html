@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div class="dialog">
+        <div class="content">
+            <p>
+                <span>用户名：</span>
+                <input type="text" class="user" placeholder="请输入用户名">
+            </p>
+            <p>
+                <span>密码:</span>
+                <input type="password" class="pwd" placeholder="请输入密码">
+            </p>
+            <p>
+                <span>请输入验证码:</span>
+                <input type="text" class="code" placeholder="请输入验证码">
+                <button class="getCode">点击获取验证码</button>
+            </p>
+
+            <p><input type="checkbox" class="sel"><b>同意协议XXXXXXX</b></p>
+            <p>
+                <button class="login">登录</button>
+            </p>
+        </div>
+
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let sel = document.querySelector(".sel"),
+            login = document.querySelector(".login"),
+            user = document.querySelector(".user"),
+            pwd = document.querySelector(".pwd"),
+            code = document.querySelector(".code"),
+            getCode = document.querySelector(".getCode");
+
+
+        // 点击时间
+        getCode.onclick = () => {
+            // 请求验证码
+            axios.post("/api/code").then(result => {
+                // 打印验证码
+                console.log(result.data.code)
+            })
+        }
+
+
+
+        login.addEventListener("click", () => {
+            // 判断同意协议
+            let flag = sel.checked
+            // 必须选中
+            if (!flag) {
+                alert("需要同意协议XXX才可以登录")
+                return;
+            }
+
+            // 登录功能
+            axios.post("/api/login", {
+                user: user.value,
+                pwd: pwd.value,
+                code: code.value,
+            }).then(result => {
+                console.log(result.data)
+            })
+        })
+
+    </script>
+</body>
+
+</html>

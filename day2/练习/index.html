@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 class="a"></h1>
+    <div class="a"></div>
+    <h2 class="a"></h2>
+    <a class="a"></a>
+    <script>
+        // 1、传入一个class类名，自动获取dom中具有此类名的所有dom节点，将所有的节点放入一个数组返回；
+        // 2、在数组的原型上扩展一个方法inArray() ，用于测试一个值在这个数组中出现的位置，如：var colors = ["red", "green", "blue"], 
+        // 打印colors.inArray("green", arr)的返回结果为1，colors.inArray("yellow", arr)的返回结果为 - 1。
+
+        // const getDom = className => [...document.querySelectorAll(className)];
+
+        // Array.prototype.inArray = function (val) {
+        //     return this.indexOf(val)
+        // }
+        // var colors = ["red", "green", "blue"];
+
+        // var i = colors.inArray("yellow")
+        // console.log(i)
+
+
+
+        var funcs = []
+
+        for (var i = 0; i < 10; i++) {
+            (function (i) {
+                funcs.push(function () {
+                    console.log(i)
+                })
+            })(i)
+        }
+        funcs.forEach(function (func) {
+            func(); //输出十个10
+        })
+    </script>
+</body>
+
+</html>

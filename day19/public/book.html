@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .con dl {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>书籍</h1>
+        <div class="con">
+            <dl>
+                <dt>
+                    <img src="" alt="">
+                </dt>
+                <dd>
+                    <p>书籍</p>
+                    <p>作者</p>
+                    <p>描述</p>
+                    <div>
+                        <span>日期</span>
+                        <p>
+                            <b>删除书籍</b>
+                            <b>查看详情</b>
+                            <b>加入书架</b>
+                        </p>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <script src="js/axios.js"></script>
+    <script>
+        let con = document.querySelector(".con");
+
+
+
+        con.addEventListener("click", e => {
+            let tar = e.target;
+            // 删除
+            if (tar.className === "delete") {
+                // 获取ID
+                let id = tar.getAttribute("my-id");
+                // 删除
+                axios.post("/api/delete", { id }).then(result => {
+                    result.data.code && render()
+                })
+            }
+
+            // 加入书架
+            if (tar.className === "toggle") {
+                // 获取ID
+                let id = tar.getAttribute("my-id");
+                // 加入书架
+                axios.post("/api/toggle", { id }).then(result => {
+                    result.data.code && render()
+                })
+            }
+
+            // 加入书架
+            if (tar.className === "detail") {
+                // 获取ID
+                let id = tar.getAttribute("my-id");
+                // 跳转详情页
+                location.href = `detail.html?id=${id}`
+            }
+        })
+
+
+        render()
+
+        function render() {
+            axios.get("/api/books").then(result => {
+                con.innerHTML = result.data.map(item => {
+                    return `
+                <dl>
+                    <dt>
+                        <img src="${item.url}" alt="">
+                    </dt>
+                    <dd>
+                        <p>书籍:${item.title}</p>
+                        <p>作者:${item.auther}</p>
+                        <p>描述:${item.desc}</p>
+                        <div>
+                            <span>日期:${item.date}</span>
+                            <p>
+                                <b class="delete" my-id=${item.id}>删除书籍</b>
+                                <b class="detail" my-id=${item.id}>查看详情</b>
+                                <b class="toggle" my-id=${item.id}>${item.isHas ? "移除书架" : "加入书架"}</b>
+                            </p>
+                        </div>
+                    </dd>
+                </dl>
+                `
+                }).join("")
+            })
+        }
+
+
+
+    </script>
+</body>
+
+</html>

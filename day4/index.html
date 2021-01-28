@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1. Promise是一个对象，也是一个构造函数；
+        //2. 通过new Promsie实例  
+        //   2-1  new  Promise(callback)  这个callback会立即执行  
+        //   2-2  callback 函数 又接受两个参数  分别是resolve 和 reject
+        //   2-3  resolve 成功回到函数   一但执行了resolve函数  实例状态pending =>  resolved  （进行时变为成功）
+        //   2-4  reject  失败回调函数   一但执行了reject函数   实例状态pedding =>  rejected  （进行时变为失败）
+
+        // 3. 实例（p）上有三个方法
+        //    p.then(callback1,callback2)   执行了 resolve函数  => callback1函数执行     执行reject函数 => callback2函数执行
+        //    p.catch(callback)             执行reject函数 => callback函数执行
+        //    p.finally(callback)           无论执行resolve或者reject => callback都会执行
+
+        // let p = new Promise((resolve, reject) => {
+        //     // resolve  是成功回调函数
+        //     // reject   是失败回调函数
+
+        //     resolve()
+        //     // setTimeout(() => {
+        //     //     reject()
+        //     // }, 2000)
+
+        // })
+        // // console.log(p)
+        // p.then(() => {
+        //     console.log("成功了！！")
+        // }).catch(() => {
+        //     console.log("失败了")
+        // }).finally(()=>{
+        //     console.log("不管成功还是失败，我都会执行")
+        // })
+
+
+
+        // 算法 ：实现 1S打印1  2S打印2 ....
+
+        function say(val) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log(val)
+                    resolve();
+                }, val * 1000)
+            })
+        }
+
+        say(1).then(() => {
+            return say(2)
+        }).then(() => {
+            return say(3)
+        }).then(() => {
+            return say(4)
+        }).then(() => {
+            return say(5)
+        })
+    </script>
+</body>
+
+</html>

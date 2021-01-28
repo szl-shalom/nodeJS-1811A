@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <input type="text">
+    <button>提交</button>
+    <script src="js/axios.js"></script>
+    <script>
+
+        let btn = document.querySelector("button"),
+            ipts = document.querySelectorAll("input");
+
+        btn.onclick = () => {
+            axios.post("/api/add", {
+                name: ipts[0].value,
+                id:Math.random().toString().slice(2),
+                sex: ipts[1].value,
+            }).then(result=>{
+                if(result.data.code) location.href = "/"
+            })
+        }
+    </script>
+</body>
+
+</html>

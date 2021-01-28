@@ -1,0 +1,53 @@
+{
+    "pathname": "src",
+    "children": [{
+        "pathname": "src\\.DS_Store"
+    }, {
+        "pathname": "src\\css",
+        "children": [{
+            "pathname": "src\\css\\.DS_Store"
+        }, {
+            "pathname": "src\\css\\upload.css"
+        }]
+    }, {
+        "pathname": "src\\images",
+        "children": [{
+            "pathname": "src\\images\\bg.png"
+        }, {
+            "pathname": "src\\images\\close.png"
+        }, {
+            "pathname": "src\\images\\upload.png"
+        }, {
+            "pathname": "src\\images\\upload1.png"
+        }, {
+            "pathname": "src\\images\\upload2.png"
+        }]
+    }, {
+        "pathname": "src\\index.html"
+    }, {
+        "pathname": "src\\js",
+        "children": [{
+            "pathname": "src\\js\\.DS_Store"
+        }, {
+            "pathname": "src\\js\\jquery-1.8.3.min.js"
+        }, {
+            "pathname": "src\\js\\upload.js"
+        }]
+    }, {
+        "pathname": "src\\php",
+        "children": [{
+            "pathname": "src\\php\\getContent.php"
+        }, {
+            "pathname": "src\\php\\imageUp.php"
+        }, {
+            "pathname": "src\\php\\upload",
+            "children": [{
+                "pathname": "src\\php\\upload\\.DS_Store"
+            }]
+        }, {
+            "pathname": "src\\php\\upload.php"
+        }, {
+            "pathname": "src\\php\\Uploader.class.php"
+        }]
+    }]
+}

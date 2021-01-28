@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="data.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <input type="text" placeholder="请搜索" class="search">
+            <button class="btn">清空历史记录</button>
+            <ul class="list">
+                <li>哈哈</li>
+                <li>喜喜</li>
+            </ul>
+        </div>
+        <div class="content">
+            <dl>
+                <dt>
+                    <img src="https://pics4.baidu.com/feed/d8f9d72a6059252d49b793262b11d93c5ab5b986.jpeg?token=da0f0a474aee9143dfa7f089bc01d8b6&s=A4F25E854D1A3BCE42AD55030300D091"
+                        alt="">
+                </dt>
+                <dd>
+                    <p>这是一个非常好的商品</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <img src="https://pics4.baidu.com/feed/d8f9d72a6059252d49b793262b11d93c5ab5b986.jpeg?token=da0f0a474aee9143dfa7f089bc01d8b6&s=A4F25E854D1A3BCE42AD55030300D091"
+                        alt="">
+                </dt>
+                <dd>
+                    <p>这是一个非常好的商品</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <img src="https://pics4.baidu.com/feed/d8f9d72a6059252d49b793262b11d93c5ab5b986.jpeg?token=da0f0a474aee9143dfa7f089bc01d8b6&s=A4F25E854D1A3BCE42AD55030300D091"
+                        alt="">
+                </dt>
+                <dd>
+                    <p>这是一个非常好的商品</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <img src="https://pics4.baidu.com/feed/d8f9d72a6059252d49b793262b11d93c5ab5b986.jpeg?token=da0f0a474aee9143dfa7f089bc01d8b6&s=A4F25E854D1A3BCE42AD55030300D091"
+                        alt="">
+                </dt>
+                <dd>
+                    <p>这是一个非常好的商品</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <img src="https://pics4.baidu.com/feed/d8f9d72a6059252d49b793262b11d93c5ab5b986.jpeg?token=da0f0a474aee9143dfa7f089bc01d8b6&s=A4F25E854D1A3BCE42AD55030300D091"
+                        alt="">
+                </dt>
+                <dd>
+                    <p>这是一个非常好的商品</p>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <script>
+        let content = document.querySelector(".content"),
+            search = document.querySelector(".search"),
+            list = document.querySelector(".list"),
+            btn = document.querySelector(".btn");
+
+        btn.addEventListener("click", () => {
+            localStorage.removeItem("p");
+            renderList()
+        })
+
+        search.addEventListener("keydown", e => {
+            if (e.keyCode === 13) {
+                // 模糊搜索
+                let arr = data.filter(item => {
+                    return item.title.includes(search.value)
+                })
+                //   重新渲染
+                render(arr)
+
+                // 本地存储
+                // 1.获取本地储存  注意默认值
+                let p = JSON.parse(localStorage.getItem("p")) || []
+                // 2.推入数据
+                p.push(search.value);
+                // 3.更新本地存储
+                localStorage.setItem("p", JSON.stringify(p))
+                // 4.重新渲染本地储存
+                renderList()
+            }
+
+
+        })
+
+
+        function renderList() {
+            let p = JSON.parse(localStorage.getItem("p")) || [];
+            list.innerHTML = p.map(item => {
+                return `
+                    <li>${item}</li>
+                `
+            }).join("")
+        }
+
+
+        function render(data) {
+            content.innerHTML = data.map(item => {
+                return `
+                <dl>
+                    <dt>
+                        <img src="${item.url}"
+                            alt="">
+                    </dt>
+                    <dd>
+                        <p>${item.title}</p>
+                    </dd>
+                </dl>
+                `
+            }).join("")
+        }
+
+        render(data);
+        renderList()
+
+    </script>
+</body>
+
+</html>

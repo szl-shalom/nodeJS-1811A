@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header></header>
+        <main>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt><img src="" alt=""></dt>
+                    <dd>
+                        <p>昵称</p>
+                        <p>时间</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </div>
+                <div class="opt">
+                    <b>评论</b>
+                    <b>点赞</b>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let main = document.querySelector("main");
+
+        main.addEventListener("click", e => {
+            let tar = e.target;
+            if (tar.className === "zan") {
+                let id = tar.getAttribute("my-id");
+                axios.post("/api/zan",{ id }).then(res=>{
+                    res.data.code && render();
+                })
+            }
+
+            if (tar.className === "mes") {
+                let id = tar.getAttribute("my-id");
+                localStorage.setItem("id",id);
+                location.href = `detail.html`
+            }
+        })
+
+
+
+
+        render();
+        function render() {
+            axios.get("/api/list").then(res => {
+                main.innerHTML = res.data.map(item => {
+                    return `
+            <div class="item">
+                <dl>
+                    <dt><img src="${item.url}" alt=""></dt>
+                    <dd>
+                        <p>昵称:${item.name}</p>
+                        <p>时间:${item.date}</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    ${item.desc}
+                </div>
+                <div class="opt">
+                    <b class="mes" my-id=${item.id}>评论<i>${item.mes.length}</i></b>
+                    <b class="zan" my-id=${item.id}>点赞<i>${item.zan}</i></b>
+                </div>
+            </div>
+            `
+                }).join("")
+            })
+
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .con {
+            display: none;
+        }
+
+        .con.active {
+            display: block;
+        }
+
+        b.active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title"></div>
+        <div class="content">
+            <div class="con"></div>
+            <div class="con"></div>
+            <div class="con"></div>
+            <div class="con"></div>
+            <div class="con"></div>
+        </div>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let title = document.querySelector(".title");
+        let content = document.querySelector(".content");
+        axios.post("/api/tab").then(res => {
+            title.innerHTML = res.data.map((item,index) => {
+                return `
+                    <b style="padding:10px;" class=${index===0?"active":""}>${item.title}</b>
+                    `
+            }).join("");
+
+
+            content.innerHTML = res.data.map((item,index) => {
+                return `
+                    <div class="${index===0?"con active":"con"}">
+                        ${item.children.map(item => {
+                    return `
+                                <dl>
+                                    <dt>
+                                        <img src="${item.url}">
+                                    </dt>    
+                                    <dd>${item.title}</dd>    
+                                </dl>
+                            `
+                }).join("")}    
+                    </div>
+                `
+            }).join("");
+
+            [...title.children].forEach((item, index) => {
+                item.onclick = () => {
+                    title.querySelector(".active") && title.querySelector(".active").classList.remove("active")
+                    item.classList.add("active");
+                    content.querySelector(".active") && content.querySelector(".active").classList.remove("active")
+                    content.children[index].classList.add("active")
+                    
+
+                }
+            })
+        })
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="add.html">新增</a>
+    <input type="text" class="search">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>姓名</td>
+                <td>年龄</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>姓名</td>
+                <td>年龄</td>
+                <td>操作</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="js/axios.js"></script>
+    <script>
+        let tbody = document.querySelector("tbody");
+        let search = document.querySelector(".search");
+
+        search.oninput = () => {
+            axios.post("/api/search", {
+                searchVal: search.value
+            }).then(res => {
+                tbody.innerHTML = res.data.map(item => {
+                    return `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.sex}</td>
+                    <td>操作</td>
+                </tr>
+                `
+                }).join("")
+            })
+        }
+
+
+        render();
+        function render() {
+            axios.post("/api/list").then(res => {
+                tbody.innerHTML = res.data.map(item => {
+                    return `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.sex}</td>
+                    <td>操作</td>
+                </tr>
+                `
+                }).join("")
+            })
+        }
+
+    </script>
+</body>
+
+</html>

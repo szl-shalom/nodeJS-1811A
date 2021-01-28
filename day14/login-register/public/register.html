@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>用户注册</h1>
+        <input type="text" class="user" placeholder="请输入用户名">
+        <input type="text" class="pwd" placeholder="请输入密码">
+        <button class="register">注册</button>
+        <a href="./login.html">去登录</a>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let user = document.querySelector(".user"),
+            pwd = document.querySelector(".pwd"),
+            register = document.querySelector(".register"); 
+
+        register.addEventListener("click", () => {
+            // 正则验证
+            let userReg = /^[\u4e00-\u9fa5]{2,6}$/,
+                pwdReg = /^\w{6,12}$/
+
+            if(!userReg.test(user.value)){
+                alert("用户名格式不正确")
+                return;
+            }
+
+            if(!pwdReg.test(pwd.value)){
+                alert("密码格式不正确")
+                return;
+            }
+            //  登录接口 /api/register
+            // 请求接口
+            axios.post("/api/register", {
+                user: user.value,
+                pwd: pwd.value,
+            }).then(result=>{
+                if(result.data.code){
+                    location.href = "login.html"
+                }else{
+                    alert("非常遗憾，注册失败！！")
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

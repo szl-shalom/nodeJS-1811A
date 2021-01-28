@@ -1,0 +1,21 @@
+{
+  "name": "demo-npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-scroll": "^2.1.1",
+    "express": "^4.17.1",
+    "mockjs": "^1.1.0",
+    "swiper": "^6.4.5"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.20"
+  }
+}

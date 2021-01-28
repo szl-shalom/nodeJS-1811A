@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .mask {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 1);
+            position: fixed;
+            left: 0;
+            top: 0;
+            /* text-align: center; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <dib class="mask">
+        加载0%
+    </dib>
+    <script>
+        let urls = [
+            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1442235009,663434301&fm=26&gp=0.jpg",
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1833567670,2009341108&fm=26&gp=0.jpg",
+            // "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbig5.wallcoo.com%2Fcartoon%2FThe_fiery_English_alphabets_and_fiery_numbers_1920_1600%2Fimages%2FThe_fiery_English_alphabet_picture_3538327.jpg&refer=http%3A%2F%2Fbig5.wallcoo.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612669196&t=15792d45cd52d42347010496e23383f4"
+        ];
+
+        let bill = 100 / urls.length;
+        let mask = document.querySelector(".mask");
+        let progress = 0;
+        function loadImg(url) {
+            return new Promise((resolve, reject) => {
+                let img = new Image();
+                img.src = url;
+                img.addEventListener("load", () => {
+
+                    resolve(img);
+                    progress += bill;
+                    mask.innerHTML = progress + "%";
+                    if(progress>=100){
+                        mask.remove()
+                    }
+                })
+            })
+        }
+
+        let arr = urls.map(url => loadImg(url));
+
+        // console.log(arr)
+
+        Promise.all(arr).then(result => {
+            result.forEach(img => { document.body.appendChild(img) })
+        }).catch(() => {
+            console.log("有问题")
+        })
+    </script>
+</body>
+
+</html>

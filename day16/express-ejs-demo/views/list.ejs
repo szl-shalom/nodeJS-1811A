@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/list.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <button class="addBtn">新增</button>
+        <input type="text" class="search">
+        <button class="searchBtn">查询</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>手机号</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <% data.forEach(function(item){  %>
+                    <tr>
+                        <th><%= item.id %></th>
+                        <th><%= item.name %></th>
+                        <th><%= item.age %></th>
+                        <th><%= item.sex %></th>
+                        <th><%= item.tel %></th>
+                        <th>
+                            <b>X</b>
+                        </th>
+                    </tr>
+                <%  }) %> -->
+            </tbody>
+        </table>
+    </div>
+    <div class="dialog">
+        <div class="content">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+            <button class="ok">确定</button>
+            <button class="no">取消</button>
+        </div>
+    </div>
+    <script src="js/axios.js"></script>
+    <script>
+        let tbody = document.querySelector("tbody"),
+            addBtn = document.querySelector(".addBtn"),
+            dialog = document.querySelector(".dialog"),
+            ipts = document.querySelectorAll(".dialog input"),
+            ok = document.querySelector(".ok"),
+            no = document.querySelector(".no");
+
+
+
+
+        addBtn.addEventListener("click", () => dialog.style.display = "block")
+
+        ok.addEventListener("click", () => {
+            axios.post("/api/add", {
+                "id": Math.random().toString().slice(2),
+                "name": ipts[0].value,
+                "age":  ipts[1].value,
+                "sex":  ipts[2].value,
+                "tel":  ipts[3].value
+            }).then(result=>{
+                result.data.code && render()
+            })
+
+
+
+            dialog.style.display = "none"
+        })
+
+        no.addEventListener("click", () => {
+            dialog.style.display = "none"
+        })
+
+        tbody.addEventListener("click", (e) => {
+            let tar = e.target;
+            if (tar.className === "del") {
+                // 发送删除接口h
+                axios.post("/api/delete", {
+                    id: tar.id
+                }).then(result => {
+                    result.data.code && render();
+                })
+            }
+        })
+
+
+
+
+
+
+        render()
+        function render() {
+            axios.post("/api/list").then(result => {
+                tbody.innerHTML = result.data.map(item => {
+                    return `
+                <tr>
+                    <th>${item.id}</th>
+                    <th>${item.name}</th>
+                    <th>${item.age}</th>
+                    <th>${item.sex}</th>
+                    <th>${item.tel}</th>
+                    <th>
+                        <b class="del" id=${item.id}>X</b>
+                        </th>
+                </tr>
+                `
+                }).join("")
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>

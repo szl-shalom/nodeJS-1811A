@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+
+.wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    height: 46px;
+    background: skyblue;
+}
+
+main{
+    flex: 1;
+    overflow-y: auto;
+}
+.item {
+    padding: 10px;
+}
+
+.item dl {
+    display: flex;
+  
+}
+
+
+dl dt{
+    margin-right: 10px;
+}
+.item dl dt img{
+    border-radius: 50%;
+    overflow: hidden;
+}

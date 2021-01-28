@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        footer {
+            width: 100%;
+            height: 46px;
+            position: fixed;
+            bottom: 0;
+            background: tomato;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="item">
+            <dl>
+                <dt><img src="" alt=""></dt>
+                <dd>
+                    <p>昵称</p>
+                    <p>时间</p>
+                </dd>
+            </dl>
+            <div class="con">
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            </div>
+            <div class="opt">
+                <b>评论</b>
+                <b>点赞</b>
+            </div>
+        </div>
+        <ul class="list">
+            <li>
+                <p>名称</p>
+                <p>内容</p>
+            </li>
+            <li>
+                <p>名称</p>
+                <p>内容</p>
+            </li>
+            <li>
+                <p>名称</p>
+                <p>内容</p>
+            </li>
+        </ul>
+        <footer>
+            <input type="text" class="ipt">
+            <button class="btn">提交评论</button>
+        </footer>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let id = localStorage.getItem("id");
+        let item = document.querySelector(".item");
+        let list = document.querySelector(".list");
+        let ipt = document.querySelector(".ipt");
+        let btn = document.querySelector(".btn")
+
+
+        btn.addEventListener("click", e => {
+            let val = ipt.value;
+            axios.post("/api/mes/add", {
+                id: id,
+                o: {
+                    name: "张三",
+                    say: val,
+                    id: Math.random().toString().slice(2),
+                }
+            }).then(res => {
+                res.data.code && render();
+            })
+        })
+
+
+        render()
+        function render() {
+            axios.post("/api/detail", { id }).then(result => {
+                console.log(result.data)
+                let o = result.data;
+
+                list.innerHTML = o.mes.map(item => {
+                    return `
+                    <li>
+                        <p>${item.name}</p>
+                        <p>${item.say}</p>
+                    </li>
+                    `
+                }).join("")
+
+                item.innerHTML = `
+                <dl>
+                    <dt><img src="${o.url}" alt=""></dt>
+                    <dd>
+                        <p>昵称:${o.name}</p>
+                        <p>时间:${o.date}</p>
+                    </dd>
+                </dl>
+                <div class="con">
+                    ${o.desc}
+                </div>
+                <div class="opt">
+                    <b>评论${o.mes.length}</b>
+                    <b>点赞${o.zan}</b>
+                </div>
+                `
+            })
+        }
+    </script>
+</body>
+
+</html>

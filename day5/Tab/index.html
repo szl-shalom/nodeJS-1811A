@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title span.active {
+            color: red
+        }
+
+        .content div {
+            display: none;
+        }
+
+        .content div.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+        <div class="title">
+            <span>标题1</span>
+            <span>标题2</span>
+            <span>标题3</span>
+            <span>标题4</span>
+            <span>标题5</span>
+        </div>
+        <div class="content">
+            <div>内容1</div>
+            <div>内容2</div>
+            <div>内容3</div>
+            <div>内容4</div>
+            <div>内容5</div>
+        </div>
+    </div>
+
+    <script>
+        // let spans = document.querySelectorAll("span"),
+        //     divs = document.querySelectorAll(".content div");
+
+        // [...spans].forEach((v, i) => {
+        //     v.addEventListener("click", () => {
+        //         document.querySelector(".title .active").classList.remove("active");
+        //         v.classList.add("active");
+        //         document.querySelector(".content .active").classList.remove("active");
+        //         divs[i].classList.add("active")
+        //     })
+        // })
+
+
+        class Tab {
+            constructor(opt) {
+                // 合并参数
+                Object.assign(this, opt);
+                // 绑定事件
+                this.bindEvent();
+            }
+            bindEvent() {
+                console.log(this);
+                [...this.title.children].forEach((v, i) => {
+                    console.log(this);
+                    v.addEventListener("click", () => {
+                        this.title.querySelector(".active") && this.title.querySelector(".active").classList.remove("active");
+                        v.classList.add("active")
+                        this.content.querySelector(".active") && this.content.querySelector(".active").classList.remove("active");
+                        this.content.children[i].classList.add("active")
+                    })
+                })
+            }
+        }
+
+
+        new Tab({
+            title: document.querySelector(".title"),
+            content: document.querySelector(".content"),
+        })
+    </script>
+</body>
+
+</html>

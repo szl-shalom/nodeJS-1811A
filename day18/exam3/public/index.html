@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+            height: 46px;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <b>序号</b>
+            <b>姓名</b>
+            <b>人气值</b>
+            <b>分值</b>
+        </li>
+    </ul>
+
+    <ul class="con">
+        <li>
+            <b>序号</b>
+            <b>姓名</b>
+            <b>人气值</b>
+            <b>分值</b>
+        </li>
+    </ul>
+    <script src="./js/axios.js"></script>
+    <script>
+        let con = document.querySelector(".con");
+
+        axios.post("/api/list").then((result) => {
+            console.log(result.data)
+            con.innerHTML = result.data.sort((a,b)=>b.score - a.score).map((item, index) => {
+                return `
+                <li id="${item.id}">
+                    <b>${index + 1}</b>
+                    <b>${item.name}</b>
+                    <b>${item.count}</b>
+                    <b>${item.score}</b>
+                </li>
+                `
+            }).join("");
+
+
+
+
+            [...con.children].forEach(item => {
+                item.addEventListener("click", () => {
+                    // console.log(item)
+                    localStorage.setItem("id",item.id)
+                    location.href = "detail.html"
+                })
+            })
+        })
+
+    </script>
+</body>
+
+</html>

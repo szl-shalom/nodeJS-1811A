@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <dl>
+        <dt>
+            <img src="" alt="">
+        </dt>
+        <dd>
+            <p>书籍</p>
+            <p>作者</p>
+            <p>描述</p>
+            <div>
+                <span>日期</span>
+                <p>
+                    <b>删除书籍</b>
+                    <b>查看详情</b>
+                    <b>加入书架</b>
+                </p>
+            </div>
+        </dd>
+    </dl>
+    <script src="js/axios.js"></script>
+    <script>
+        let id = location.search.slice(1).split("=")[1];
+
+
+        document.addEventListener("click", e => {
+            let tar = e.target;
+            if (tar.className === "delete") {
+                axios.post("/api/delete", { id }).then(result => {
+                    if (result.data.code) location.href = "/"
+                })
+            }
+
+            if (tar.className === "save") {
+                axios.post("/api/save", {
+                    id,
+                    title:document.querySelector(".title").value,
+                    auther:document.querySelector(".auther").value,
+                    desc:document.querySelector(".desc").value,
+                }).then(result => {
+                    if (result.data.code) location.href = "/"
+                })
+            }
+        })
+
+        axios.post("/api/detail", { id }).then(result => {
+            let o = result.data;
+            let dl = document.querySelector("dl");
+            dl.innerHTML = `
+            <dt>
+                <img src="${o.url}" alt="">
+            </dt>
+            <dd>
+                <p>书籍:<input value=${o.title} class="title"></p>
+                <p>作者:<input value=${o.auther} class="auther"></p>
+                <p>描述:<textarea  class="desc">${o.desc}</textarea></p>
+                <p>章节:${o.source}章</p>
+                <p>字数:${o.num}万字</p>
+                <div>
+                    <span>${o.date}</span>
+                </div>    
+                <p>
+                    <b class="delete">删除</b>
+                    <b class="save">保存</b>
+                    </p>
+            </dd>
+            `
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="user">
+    <input type="text" class="pwd">
+    <button class="login">登录</button>
+    <script src="./js/axios.js"></script>
+    <script>
+        let user = document.querySelector(".user"),
+            pwd = document.querySelector(".pwd"),
+            login = document.querySelector(".login");
+
+        login.addEventListener("click", () => {
+            // 发送请求
+            // 需要插件axios
+            // 约定：  
+            // 登录接口 ：   /api/login
+            axios.post("/api/login", {
+                user: user.value,  //用户名
+                pwd: pwd.value,    //密码
+            }).then(result => {
+                console.log(result.data)
+            })
+        })
+
+    </script>
+</body>
+
+</html>

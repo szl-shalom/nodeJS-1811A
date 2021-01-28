@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title span {
+            padding: 0 20px;
+        }
+
+        .title span.active {
+            /* padding: 0 20px; */
+            color: red;
+        }
+
+        .content p {
+            display: none;
+        }
+
+
+        .content p.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title"></div>
+    <div class="content"></div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let title = document.querySelector(".title"),
+            content = document.querySelector(".content")
+        axios.get("/getData").then(res => {
+            console.log(res.data)
+            title.innerHTML = res.data.map(item => `<span>${item}</span>`).join("")
+            content.innerHTML = res.data.map(item => `<p>内容${item}</p>`).join("");
+
+
+            [...title.children].forEach((v, i) => {
+                v.addEventListener("click", () => {
+                    title.querySelector(".active") && title.querySelector(".active").classList.remove("active")
+                    content.querySelector(".active") && content.querySelector(".active").classList.remove("active")
+                    v.classList.add("active");
+                    content.children[i].classList.add("active")
+                })
+            })
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p>todolist</p>
+        <input type="text" placeholder="请输入内容" class="ipt">
+    </div>
+
+    <div class="content">
+        <p>正在进行 <b class="num1">1</b></p>
+        <ul class="list1">
+            <li>
+                <input type="checkbox">
+                <span>项目1</span>
+            </li>
+        </ul>
+
+
+        <p>已经完成 <b class="num2">2</b></p>
+        <ul class="list2">
+            <li>
+                <input type="checkbox" checked="true">
+                <span>项目2</span>
+            </li>
+            <li>
+                <input type="checkbox" checked="true">
+                <span>项目3</span>
+            </li>
+        </ul>
+    </div>
+    <script>
+
+        class Todolist {
+            constructor(opt) {
+                Object.assign(this, opt);
+
+                this.getData();
+                this.bindEvent();
+            }
+            bindEvent() {
+                this.ipt.addEventListener("keydown", e => {
+                    if (e.keyCode === 13) {
+                        let arr = JSON.parse(localStorage.getItem("list1")) || [];
+                        arr.push(this.ipt.value);
+                        localStorage.setItem("list1", JSON.stringify(arr));
+                        this.getData()
+                    }
+                })
+
+
+                this.content.addEventListener("click", e => {
+                    let tar = e.target;
+                    if (tar.nodeName === "INPUT") {
+                        let i = tar.getAttribute("i");
+                        let arr1 = JSON.parse(localStorage.getItem("list1")) || []
+                        let arr2 = JSON.parse(localStorage.getItem("list2")) || []
+                        if (tar.checked) {
+                            // list1 =>list2
+                            let res = arr1.splice(i, 1);
+                            arr2.push(res[0])
+                        } else {
+                            let res = arr2.splice(i, 1);
+                            arr1.push(res[0])
+                        }
+                        localStorage.setItem("list1",JSON.stringify(arr1))
+                        localStorage.setItem("list2",JSON.stringify(arr2))
+                        this.getData()
+                    }
+                })
+            }
+            getData() {
+                this.list1Data = JSON.parse(localStorage.getItem("list1")) || [];
+                this.list2Data = JSON.parse(localStorage.getItem("list2")) || [];
+
+                this.list1.innerHTML = this.list1Data.map((item, index) => {
+                    return `
+                    <li>
+                        <input type="checkbox" i=${index}>
+                        <span>${item}</span>
+                    </li>
+                    `
+                }).join("")
+
+                this.list2.innerHTML = this.list2Data.map((item, index) => {
+                    return `
+                    <li>
+                        <input type="checkbox" checked i=${index}>
+                        <span>${item}</span>
+                    </li>
+                    `
+                }).join("")
+                this.num1.innerHTML = this.list1Data.length;
+                this.num2.innerHTML = this.list2Data.length;
+            }
+
+        }
+
+        new Todolist({
+            ipt: document.querySelector(".ipt"),
+            list1: document.querySelector(".list1"),
+            list2: document.querySelector(".list2"),
+            num1: document.querySelector(".num1"),
+            num2: document.querySelector(".num2"),
+            content: document.querySelector(".content")
+        })
+
+    </script>
+</body>
+
+</html>

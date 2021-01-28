@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .banner {
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .swiper-wrapper {
+            width: 20000px;
+            transition: margin-left 2s;
+        }
+
+        .swiper-slide {
+            float: left;
+            height: 500px;
+            width: 500px;
+            line-height: 500px;
+            text-align: center;
+            background: tomato;
+        }
+
+        .swiper-slide:nth-child(even) {
+            background: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="swiper-container banner">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">1</div>
+            <div class="swiper-slide">2</div>
+            <div class="swiper-slide">3</div>
+            <div class="swiper-slide">4</div>
+            <div class="swiper-slide">1</div>
+        </div>
+    </div>
+    <script>
+        class Swiper {
+            index = 0;
+            constructor(str, opt) {
+                this.container = document.querySelector(str);
+                this.wrapper = this.container.querySelector(".swiper-wrapper");
+
+                this.start()
+            }
+            start() {
+                setInterval(() => {
+                    if (this.index === 4) {
+                        this.index = 0;
+                        this.wrapper.style.transition = "none";
+                        this.wrapper.style.marginLeft = 0;
+                    }
+                    setTimeout(() => {
+                        this.index++;
+                        this.wrapper.style.transition = "margin-left 2s";
+                        this.wrapper.style.marginLeft = -this.index * 500 + "px"
+                    }, 0);
+
+                }, 3000);
+            }
+        }
+
+        new Swiper(".banner", {
+            autoplay: true,
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title span {
+            padding: 0 12px;
+            display: inline-block;
+        }
+
+        .title span.active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title">
+            <span></span>
+        </div>
+        <div class="content">
+            <dl>
+                <dd>
+                    <img src="" alt="">
+                </dd>
+                <dt>
+                    <p></p>
+                    <p></p>
+                </dt>
+            </dl>
+        </div>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let title = document.querySelector(".title"),
+            content = document.querySelector(".content"),
+            ind = 0;
+
+        axios.post("/api/tab").then(result => {
+            console.log(result.data)
+            title.innerHTML = result.data.map((item, index) => {
+                return `<span class="${ind === index ? "active" : ""}">${item.title}</span>`
+            }).join("");
+
+            renderContent(result);
+
+            [...title.children].forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    title.children[ind].classList.remove("active");
+                    ind = index;
+                    title.children[ind].classList.add("active");
+                    renderContent(result);
+                })
+            })
+        })
+
+
+        function renderContent(result) {
+            content.innerHTML = result.data[ind].children.map(item => {
+                return `
+                <dl>
+                    <dd>
+                        <img src="${item.url}" alt="">
+                    </dd>
+                    <dt>
+                        <p>${item.title}</p>
+                        <p>${item.desc}</p>
+                    </dt>
+                </dl>
+                `
+            }).join("");
+        }
+    </script>
+</body>
+
+</html>

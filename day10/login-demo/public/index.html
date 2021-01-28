@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" placeholder="请输入用户名" class="user">
+    <input type="text" placeholder="请输入密码" class="pwd">
+    <button class="login">登录</button>
+    <button class="register">注册</button>
+
+    <script src="./js/axios.js"></script>
+    <script>
+        // 获取必要的节点
+        let user = document.querySelector(".user"),
+            pwd = document.querySelector(".pwd"),
+            login = document.querySelector(".login"),
+            register = document.querySelector(".register");
+
+        login.addEventListener("click", () => {
+            axios.post("/api/login", {
+                user: user.value,
+                pwd: pwd.value
+            }).then(result => {
+                if (result.data) {
+                    location.href = "http://www.youku.com"
+                } else {
+                    alert("非常遗憾")
+                }
+            })
+        })
+
+
+        register.addEventListener("click", () => {
+            axios.post("/api/register", {
+                user: user.value,
+                pwd: pwd.value
+            }).then(result => {
+                if (result.data) {
+                   alert("注册成功")
+                } else {
+                    alert("注册失败")
+                }
+            })
+        })
+
+
+    </script>
+</body>
+
+</html>

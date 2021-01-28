@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 60%;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let urls = [
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fspider20201129%2F515%2Fw211h304%2F20201129%2Fc3ea-kentcvy3289549.gif&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612668077&t=2ea149cfe11838ce87e8c0159ab998eb",
+            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1442235009,663434301&fm=26&gp=0.jpg",
+            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1833567670,2009341108&fm=26&gp=0.jpg",
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbig5.wallcoo.com%2Fcartoon%2FThe_fiery_English_alphabets_and_fiery_numbers_1920_1600%2Fimages%2FThe_fiery_English_alphabet_picture_3538327.jpg&refer=http%3A%2F%2Fbig5.wallcoo.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612669196&t=15792d45cd52d42347010496e23383f4"
+        ];
+
+        let loadUrl = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3281904817,1077646612&fm=26&gp=0.jpg";
+        // 循环
+        urls.forEach(url => {
+            // 新建图片
+            let img = new Image();
+            // 修改loading
+            img.src = loadUrl;
+            // 设置真实路径
+            img.setAttribute("realSrc", url);
+            // 添加页面
+            document.body.appendChild(img)
+        });
+
+        // 滚动事件
+        document.addEventListener("scroll", () => {
+            // 
+            let imgs = document.querySelectorAll("img");
+            // 循环
+            [...imgs].forEach(img => {
+                // 获取图片距离页面顶部距离
+                let t = img.getBoundingClientRect().top;
+                // 判断
+                if (t < window.innerHeight) {
+                    // 读取图片
+                    loadImg(img.getAttribute("realSrc")).then(url => {
+                        // 修改真真实路径
+                        img.src = url;
+                    })
+                }
+            })
+        })
+
+        function loadImg(url) {
+            return new Promise((resolve, reject) => {
+                let img = new Image();
+                img.src = url;
+                img.addEventListener("load", () => {
+                    resolve(url)
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
